@@ -1,1 +1,32 @@
+# Carpeta de dependencias de Node.js
 node_modules/
+
+# Archivos de bloqueo de paquetes
+package-lock.json
+yarn.lock
+
+# Archivos de construcción y salida de compilación
+/dist/
+/.vite/
+
+# Archivos de entorno
+.env*
+
+# Archivos de respaldo y temporales
+*~
+*.bak
+*.swp
+
+# Archivos de caché
+.cache/
+
+# Archivos de log
+logs/
+*.log
+
+# Archivos de configuración del editor
+.vscode/
+.idea/
+
+# Otros archivos de configuración
+.vite-env.d.ts
