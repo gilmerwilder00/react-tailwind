@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import styles from "./Checkout.module.css";
+// import styles from "./Checkout.module.css";
 
 export default function Checkout({ product }) {
   const [quantity, setQuantity] = useState(1);
@@ -38,34 +38,38 @@ export default function Checkout({ product }) {
     localStorage.setItem("cart", JSON.stringify(productsOnCart));
   };
   return (
-    <section className={styles["product-checkout-block"]}>
-      <div className={styles["checkout-container"]}>
-        <span className={styles["checkout-total-label"]}>Total:</span>
-        <h2 id="price" className={styles["checkout-total-price"]}>
+    <section
+      className="w-[300px] p-[10px] m-[10px] flex flex-col 
+                        sm:w-[340px] "
+    >
+      <div className="bg-[#ebebeb] p-[20px]  sm:p-[33px] rounded-[2px]">
+        <span className="text-[#ff3b3c]">Total:</span>
+        <h2 id="price" className="text-[28px] font-bold mt-[10px]">
           $ {(product.price * quantity).toLocaleString()}
         </h2>
-        <p className={styles["checkout-description"]}>
+        <p className="leading-[20.4px] break-words  ">
           Includes Country tax and AFIP collection
         </p>
-        <ul className={styles["checkout-policy-list"]}>
-          <li>
-            <span className={styles["policy-icon"]}>
+        <ul className="p-0 list-none mb-[30px]">
+          <li className="flex items-center mt-[20px]">
+            <span className=" w-1/12 mr-[10px]">
               <img src="/truck.png" alt="Truck" />
             </span>
-            <span className={styles["policy-desc"]}></span>
+            <span className="w-11/12">
+            Add the product to the cart to find out the shipping costs.
+            </span>
           </li>
-          <li>
-            <span className={styles["policy-icon"]}>
+          <li className="flex items-center mt-[20px]">
+            <span className="w-1/12 mr-[10px] grow">
               <img src="/plane.png" alt="Plane" />
             </span>
-            <span className={styles["policy-desc"]}>
-              Add the product to the cart to know the shipping costs
-            </span>
+            <span className="w-11/12">Receive it in approximately 10 to 15 business days by selecting standard shipping.</span>
           </li>
         </ul>
-        <div className={styles["checkout-process"]}>
-          <div className={styles["top"]}>
+        <div className="flex mb-[10px]">
+          <div className="flex mb-[10px] w-full">
             <input
+              className="h-[40px] rounded-[10px] border-none w-[62px] mr-[10px] px-[10px] box-border text-center"
               type="number"
               min="1"
               value={quantity}
@@ -74,7 +78,11 @@ export default function Checkout({ product }) {
             />
             <button
               type="button"
-              className={button ? styles["remove-btn"] : styles["cart-btn"]}
+              className={
+                button
+                  ? "w-full bg-[#202020] text-white font-bold border-none h-[40px] rounded-[10px] hover:bg-[#404040] "
+                  : "w-full bg-[#ff3b3c] text-white font-bold border-none h-[40px] rounded-[10px] hover:bg-[#ff5151] "
+              }
               onClick={manageCart}
             >
               {button ? "Remove from cart" : "Add to cart"}

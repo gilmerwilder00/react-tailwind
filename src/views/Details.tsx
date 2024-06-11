@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import styles from "./Details.module.css";
+// import styles from "./Details.module.css";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import products from "../assets/products";
@@ -17,18 +17,26 @@ function Details() {
     <>
       <NavBar />
       {!product && <Hero first="NOT" second="found" />}
-      <main>
-        <div className={styles["details-container"]}>
+      <main className="w-full flex justify-center  items-center p-[20px]">
+        {/* <div className={styles["details-container"]}> */}
+        <div className=" w-full flex flex-wrap justify-center">
           {product && (
-            <div id="details" className={styles["columns-container"]}>
+            // <div id="details" className={styles["columns-container"]}>
+            <div id="details" className="flex justify-center flex-wrap">
               <Thumbs product={product} />
               <Description product={product} />
               <Checkout product={product} />
             </div>
           )}
-          <div className={styles["sales-block"]}>
-            <h2 className={styles["sales-title"]}>Week Sale</h2>
-            <div id="product-container" className={styles["product-container"]}>
+          {/* <div className={styles["sales-block"]}> */}
+          <div className=" w-full flex flex-col justify-center items-center m-[20px 0]  ">
+            {/* <h2 className={styles["sales-title"]}>Week Sale</h2> */}
+            <h2 className=" text-center text-[40px]">Week Sale</h2>
+            {/* <div id="product-container" className={styles["product-container"]}> */}
+            <div
+              id="product-container"
+              className=" w-full flex flex-col flex-wrap  justify-between items-center md:flex-row lg:w-[1024px]"
+            >
               {onsale.map((each) => (
                 <ProductCard
                   key={each.id}
