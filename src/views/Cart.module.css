@@ -12,7 +12,8 @@ main {
   display: flex;
 }
 
-.product-cart, .cart-resume {
+.product-cart,
+.cart-resume {
   background-color: #f2f2f2;
   border-radius: 5px;
   padding: 30px;
@@ -45,11 +46,13 @@ main {
   width: 100%;
   text-align: right;
 }
+
 .product-description {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .product-input {
   width: 70px;
   height: 40px;
