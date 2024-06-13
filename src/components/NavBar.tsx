@@ -7,7 +7,7 @@ export default function NavBar() {
     <header className="w-full min-h-[150px] bg-[#ff3b3c] p-[20px] flex flex-col items-center">
       <div
         className="w-full flex flex-col  justify-between items-center grow gap-[20px] pb-[20px]
-                      md:flex-row lg:w-[1080px]"
+                      md:flex-row xl:w-[1080px]"
       >
         <Link to="/" className="w-1/3 flex items-center grow  justify-start">
           <img
@@ -57,7 +57,7 @@ export default function NavBar() {
 
       <nav
         id="navbar"
-        className="w-full p-[15px 20px] bg-[#ff3b3c] flex flex-wrap  justify-center  md:justify-between list-none  items-center text-[14px] lg:w-[1080px]"
+        className="w-full p-[15px 20px] bg-[#ff3b3c] flex flex-wrap  justify-center  md:justify-between list-none  items-center text-[14px] xl:w-[1080px]"
       >
         <NavButton title="Ofertas" link="/" />
         <NavButton title="Cómo comprar" link="/" />

@@ -10,7 +10,7 @@ function Home() {
     <>
       <NavBar />
       <Hero first="tecnologia" second="renovada" />
-      <main className="w-full flex justify-center items-center p-[20px">
+      <main className="w-full flex justify-center items-center p-[20px]">
         {/* <div className={styles["product-container"]} id="products"> */}
         <div className="w-[1080px] flex flex-wrap justify-between"  id="products">
           {products.map((each) => (
