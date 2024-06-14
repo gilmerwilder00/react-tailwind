@@ -1,11 +1,15 @@
-function CartResume(props) {
+
+interface CartResumeProps{
+  price:number;
+}
+
+function CartResume(props:CartResumeProps) {
   const { price } = props
-  let formatter = new Intl.NumberFormat('en-US', {
+  const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
-  let formattedPrice = formatter.format(price); 
-  // console.log(formattedNum);
+  const formattedPrice = formatter.format(price); 
   
   return (
     <>

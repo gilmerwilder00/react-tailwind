@@ -1,37 +1,46 @@
 import { useRef } from "react";
+import Product from "../interfaces/Product";
 
-function CartCard(props) {
-  const { id, title, photo, description, price, quantity, color, updateCart } = props;
-  // const { id, title, photo, description, price, quantity, color } = props;
+interface productCardProps {
+  id:string;
+  title:string;
+  image:string;
+  description:string;
+  price: number;
+  quantity: number;
+  color: string;
+  updateCart: (updatedProducts: Product[])=>void; 
+}
 
-  const formatter = new Intl.NumberFormat('en-US', {
+function CartCard(props: productCardProps) {
+  const { id, title, image, description, price, quantity, color, updateCart } =
+    props;
+
+  const formatter = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
-  const formattedPrice = formatter.format(price); 
-
-//              {current:null}
-  const units = useRef();
-
-  console.log(units);
-  
+  const formattedPrice = formatter.format(price);
+  const unitsR = useRef<HTMLInputElement>(null);
 
   const manageUnits = () => {
-    // console.log("dentro de manage units");
     let productsOnCart = JSON.parse(localStorage.getItem("cart") ?? "[]");
-    const one = productsOnCart.find((each) => each.id === id);
-    one.units = Number(units.current.value);
+    const one = productsOnCart.find((each: Product) => each.id === id);
+    one.units = Number(unitsR.current?.value);
     localStorage.setItem("cart", JSON.stringify(productsOnCart));
     updateCart(productsOnCart);
   };
 
   return (
     <>
-      <article className="bg-[#f2f2f2] rounded-[5px] p-[20px] m-[20px] min-h-[220px] break-words flex justify-between w-full  sm:w-[600px] lg:w-[680px] items-center flex-col sm:flex-row ">
+      <article
+        className="bg-[#f2f2f2] rounded-[5px] p-[20px] m-[20px] min-h-[220px] break-words flex justify-between w-full  sm:w-[600px] 
+      lg:w-[680px] items-center flex-col sm:flex-row "
+      >
         <img
           className=" hidden lg:inline-block  w-full lg:w-[100px] h-[100px] rounded-[5px] "
-          src={photo}
+          src={image}
           alt={title}
         />
 
@@ -52,7 +61,7 @@ function CartCard(props) {
             type="number"
             name="quantity"
             defaultValue={quantity}
-            ref={units}
+            ref={unitsR}
             min="1"
             onChange={manageUnits}
           />

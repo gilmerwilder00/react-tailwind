@@ -1,6 +1,7 @@
 // import styles from "./Description.module.css"
+import ProductProp from "../interfaces/ProductProp"
 
-export default function Description({ product }) {
+export default function Description({ product }:ProductProp) {
     return <section className="w-[300px] p-[10px] m-[10px] flex flex-col
                                sm:w-[340px] ">
     <h1 className="text-black text-[28px] font-bold break-words mt-0 ">{product.title}</h1>

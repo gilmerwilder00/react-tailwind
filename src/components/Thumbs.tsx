@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 // import styles from "./Thumbs.module.css";
+import ProductProp from "../interfaces/ProductProp.ts";
 
-export default function Thumbnail({ product }) {
+export default function Thumbnail({product}:ProductProp) {
   const [thumb, setThumb] = useState(product.images[0] || "/mock1.jpg");
   useEffect(() => setThumb(product.images[0]),[product.id]);
   return (
@@ -18,7 +19,7 @@ export default function Thumbnail({ product }) {
         ))}
       </div>
       <img
-        className= "w-[220px] h-[220px] object-cover                    sm:w-[280px] sm:h-[280px]"
+        className= "w-[220px] h-[220px] object-cover sm:w-[280px] sm:h-[280px]"
         id="big-img"
         src={thumb}
         alt={product.title}
