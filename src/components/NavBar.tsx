@@ -1,8 +1,24 @@
 // import styles from "./NavBar.module.css";
 import NavButton from "./NavButton";
 import { Link } from "react-router-dom";
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { captureText } from "../store/actions/products";
 
 export default function NavBar() {
+  const text = useRef<HTMLInputElement | null>(null);
+  // console.log(text);
+
+  const dispatch = useDispatch();
+
+  const setText = () => {
+    dispatch(
+      captureText({
+        text: text.current?.value,
+      })
+    );
+  };
+
   return (
     <header className="w-full min-h-[150px] bg-[#ff3b3c] p-[20px] flex flex-col items-center">
       <div
@@ -24,6 +40,8 @@ export default function NavBar() {
             type="text"
             placeholder="Search"
             id="search"
+            ref={text}
+            onChange={setText}
           />
         </form>
 

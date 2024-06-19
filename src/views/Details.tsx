@@ -2,19 +2,42 @@ import { useParams } from "react-router-dom";
 // import styles from "./Details.module.css";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
-import products from "../assets/products";
+// import products from "../assets/products";
 import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
 import Thumbs from "../components/Thumbs";
 import Description from "../components/Description";
 import Checkout from "../components/Checkout";
-
 import Product from "../interfaces/Product";
+
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 
 function Details() {
   const { id } = useParams();
-  const product:Product = products.find((each:Product) => each.id === id);
-  const onsale:Product[] = products.filter((each:Product) => each.onsale);
+  // const product:Product = products.find((each:Product) => each.id === id);
+  // const onsale:Product[] = products.filter((each:Product) => each.onsale);
+
+  const [product, setProduct] = useState<Product | null >(null);
+  const [onsale, setOnSale] = useState<Product[]>([]); 
+
+  useEffect(() => {
+    if(!id) return; // evitar llama a la API si ID no esta definido
+    axios("/products.json")
+       .then((res) => {
+          console.log("CONSUMO API desde DETAILS");
+          console.log(res.data);
+          const products: Array<Product> = res.data;
+          const detailProduct: Product | undefined = products.find((each) => each.id === id);
+          detailProduct && setProduct(detailProduct);
+          const filterProducts: Array<Product> = products.filter((each) => each.onsale);
+          filterProducts.length > 0 && setOnSale(filterProducts);
+       })
+       .catch((err) => console.log(err));
+ }, [id]);
+ 
+
   return (
     <>
       <NavBar />
