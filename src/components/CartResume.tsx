@@ -1,16 +1,28 @@
+// ------------------------------------------
+import { useSelector } from "react-redux";
+import { RootState } from "../store/index";
+// ------------------------------------------
 
-interface CartResumeProps{
-  price:number;
+interface CartResumeProps {
+  price: number;
 }
 
-function CartResume(props:CartResumeProps) {
-  const { price } = props
-  const formatter = new Intl.NumberFormat('en-US', {
+function CartResume(props: CartResumeProps) {
+  const { price } = props;
+
+  // -----------------------------------------------------------------------
+  const total = useSelector((store: RootState) => store.products.total);
+
+  console.log(`El total es: ${total}`);
+  // ------------------------------------------------------------------------
+
+  const formatter = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
   });
-  const formattedPrice = formatter.format(price); 
-  
+  // const formattedPrice = formatter.format(price);
+  const formattedTotal = formatter.format(total);
+
   return (
     <>
       <div className="bg-[#f2f2f2] rounded-[5px] p-[20px] m-[20px] min-h-[220px] break-words justify-between w-full  sm:w-[340px] flex flex-col">
@@ -20,7 +32,8 @@ function CartResume(props:CartResumeProps) {
           </h2>
           <div className="flex justify-between items-center text-[20px]">
             <h3>Total</h3>
-            <strong className="text-[20px]">${formattedPrice}</strong>
+            {/* <strong className="text-[20px]">${formattedPrice}</strong> */}
+            <strong className="text-[20px]">${formattedTotal}</strong>
           </div>
           <small className="pb-[10px]">
             Incluye impuesto PAIS y percepción AFIP.

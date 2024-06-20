@@ -1,40 +1,35 @@
-// import styles from "./Cart.module.css";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import Hero from "../components/Hero";
 import CartCard from "../components/CartCard";
 import CartResume from "../components/CartResume";
 import { useState, useEffect } from "react";
-
 import Product from "../interfaces/Product";
+
+// ------------------------------------------------
+import { useDispatch } from "react-redux";
+import { calculateTotal } from "../store/actions/products";
+//----------------------------------------
 
 function Cart() {
   const [productsOnCart, setProductsOnCart] = useState<Product[]>([]);
-  const [cartTotal, setCartTotal] = useState(0);
 
   const totalPrice = productsOnCart.reduce(
-    (acc, elem: Product) => acc + elem.price * (elem.units??1),
+    (acc, elem: Product) => acc + elem.price * (elem.units ?? 1),
     0
   );
 
-  const calculateCartTotal = (products: Product[]) => {
-    const total = products.reduce(
-      (acc, product) => acc + product.price * (product.units??1),
-      0
-    );
-    setCartTotal(total);
-  };
-
-  const updateCart = (updatedProducts: Product[]) => {
-    setProductsOnCart(updatedProducts);
-    calculateCartTotal(updatedProducts);
-    localStorage.setItem("cart", JSON.stringify(updatedProducts));
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (localStorage.getItem("cart")) {
-      const products: Product[] = JSON.parse(localStorage.getItem("cart")??"[]");
-      setProductsOnCart(products); // esto causa que se renderice el componente Cart
+      const products: Product[] = JSON.parse(
+        localStorage.getItem("cart") ?? "[]"
+      );
+      setProductsOnCart(products);
+      // -------------------------------------------------------
+      dispatch(calculateTotal({ products: products }));
+      // -------------------------------------------------------
     }
   }, []);
 
@@ -56,7 +51,6 @@ function Cart() {
                 price={each.price}
                 quantity={each.units}
                 color={each.colors[0]}
-                updateCart={updateCart}
               />
             ))}
           </section>

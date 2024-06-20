@@ -1,13 +1,22 @@
-// import styles from "./NavBar.module.css";
 import NavButton from "./NavButton";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { captureText } from "../store/actions/products";
+import { RootState } from "../store/index";
 
 export default function NavBar() {
   const text = useRef<HTMLInputElement | null>(null);
-  // console.log(text);
+
+  // ------------------------------
+  const location = useLocation();
+  console.log(location);
+  
+  const pathname = location.pathname;
+  console.log(pathname);
+  // ------------------------------
+  const textStore = useSelector((store: RootState) => store.products.text);
+  // ------------------------------
 
   const dispatch = useDispatch();
 
@@ -35,14 +44,20 @@ export default function NavBar() {
         </Link>
 
         <form className=" w-10/12   md:w-1/3 flex items-center grow">
-          <input
-            className=" h-[60px] rounded-[15px] w-full  p-[10px]  mx-[20px] text-[14px] text-center"
-            type="text"
-            placeholder="Search"
-            id="search"
-            ref={text}
-            onChange={setText}
-          />
+          
+          {pathname === "/" && (
+            <input
+              className=" h-[60px] rounded-[15px] w-full  p-[10px]  mx-[20px] text-[14px] text-center"
+              type="text"
+              placeholder="Search"
+              id="search"
+              ref={text}
+              onChange={setText}
+              // ---------------------
+              defaultValue={textStore}
+              // ---------------------
+            />
+          )}
         </form>
 
         <ul className="w-1/3 flex items-center grow  justify-center  md:justify-end  list-none ">

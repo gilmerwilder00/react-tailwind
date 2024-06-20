@@ -1,12 +1,8 @@
-// import styles from "./Home.module.css";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import NavBar from "../components/NavBar";
 import ProductCard from "../components/ProductCard";
-// import products from "../assets/products.js";
 import Product from "../interfaces/Product";
-
-// --
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -15,11 +11,12 @@ import type { RootState } from "../store/index";
 
 function Home() {
   const [products, setProducts] = useState<Product[]>([]);
-
   const text = useSelector((store: RootState) => store.products.text);
-
-  console.log(text);
-
+  // ----------------------------
+  // console.log(products);
+  // ----------------------------
+  console.log(text)
+  
   useEffect(() => {
     axios
       .get("/products.json")

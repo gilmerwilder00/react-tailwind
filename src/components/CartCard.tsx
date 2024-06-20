@@ -1,20 +1,24 @@
 import { useRef } from "react";
 import Product from "../interfaces/Product";
 
+// -----------------------------------
+import { useDispatch } from "react-redux";
+import { calculateTotal } from "../store/actions/products";
+//------------------------------------
+
 interface productCardProps {
-  id:string;
-  title:string;
-  image:string;
-  description:string;
+  id: string;
+  title: string;
+  image: string;
+  description: string;
   price: number;
   quantity: number;
   color: string;
-  updateCart: (updatedProducts: Product[])=>void; 
 }
 
 function CartCard(props: productCardProps) {
-  const { id, title, image, description, price, quantity, color, updateCart } =
-    props;
+
+  const { id, title, image, description, price, quantity, color } = props;
 
   const formatter = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
@@ -23,13 +27,24 @@ function CartCard(props: productCardProps) {
 
   const formattedPrice = formatter.format(price);
   const unitsR = useRef<HTMLInputElement>(null);
+  // ----------------------------------------------------
+  const dispatch = useDispatch();
+  // ----------------------------------------------------
 
   const manageUnits = () => {
-    let productsOnCart = JSON.parse(localStorage.getItem("cart") ?? "[]");
-    const one = productsOnCart.find((each: Product) => each.id === id);
-    one.units = Number(unitsR.current?.value);
-    localStorage.setItem("cart", JSON.stringify(productsOnCart));
-    updateCart(productsOnCart);
+    const productsOnCart = localStorage.getItem("cart");
+    let products = [];
+    if (productsOnCart) {
+      products = JSON.parse(productsOnCart);
+    }
+    const one = products?.find((each: Product) => each.id ===id);
+    if (one) {
+      one.units = Number(unitsR.current?.value);
+      localStorage.setItem("cart", JSON.stringify(products));
+      // ---------------------------------------
+      dispatch(calculateTotal({ products }));
+      // ---------------------------------------
+    }
   };
 
   return (

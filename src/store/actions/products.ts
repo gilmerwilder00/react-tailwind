@@ -5,4 +5,10 @@ const captureText = createAction(
     (obj) => ({ payload: { text: obj.text } })
 )
 
-export { captureText };
+const calculateTotal = createAction(
+    "calculateTotal",
+    (obj) => ({ payload: { products: obj.products } })
+);
+ 
+ export { captureText, calculateTotal };
+ 
