@@ -1,17 +1,22 @@
 import { useState, useRef, useEffect } from "react";
-// import styles from "./Checkout.module.css";
 import ProductProp from "../interfaces/ProductProp";
 import Product from "../interfaces/Product";
 
-// interface CheckoutProps{
-//   product: Product
-// }
+// ------------------------------------------------------
+import { useDispatch } from "react-redux";
+import { calculateCantProductsCart } from "../store/actions/products";
+// ------------------------------------------------------
+
 
 export default function Checkout({ product }: ProductProp) {
 
   const [quantity, setQuantity] = useState(1);
   const [button, setButton] = useState(false);
   const unitsR = useRef<HTMLInputElement>(null);
+
+  // ----------------------------------------------
+   const dispatch = useDispatch();
+  // ----------------------------------------------
 
   useEffect(() => {
     let productsOnCart = [];
@@ -45,6 +50,25 @@ export default function Checkout({ product }: ProductProp) {
       setButton(false);
     }
     localStorage.setItem("cart", JSON.stringify(productsOnCart));
+    // --------------------------------------------------------------------
+    // const cantProductsOnCart = productsOnCart.length;
+    const cantProductsOnCart = productsOnCart.reduce((acc: number,product: Product)=>acc + product.units , 0);
+    console.log(`la cantidad de productos antes de despachar desde detalle es: ${cantProductsOnCart}`);
+
+
+// dispatch( calculateCantProductsCart (   {  cantProducts :   0   }  ) )
+
+//dispatch(    
+//    {
+//     type: "calculateCantProductsCart"
+//     payload: { 
+//               cantProducts: 0
+//              }
+//     }                  
+//  )
+
+    dispatch(calculateCantProductsCart({cantProducts:cantProductsOnCart}))
+    // ---------------------------------------------------------------------
   };
 
 

@@ -1,27 +1,42 @@
 // ------------------------------------------
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/index";
+import { calculateCantProductsCart } from "../store/actions/products";
 // ------------------------------------------
 
-interface CartResumeProps {
-  price: number;
-}
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.css";
 
-function CartResume(props: CartResumeProps) {
-  const { price } = props;
-
-  // -----------------------------------------------------------------------
+function CartResume() {
   const total = useSelector((store: RootState) => store.products.total);
-
-  console.log(`El total es: ${total}`);
-  // ------------------------------------------------------------------------
-
   const formatter = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  // const formattedPrice = formatter.format(price);
+
   const formattedTotal = formatter.format(total);
+
+  const dispatch =useDispatch();
+
+  const handleFinishPurchase = () => {
+    console.log("Finalizando compra...");
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción no se puede revertir.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ba53fb",
+      cancelButtonColor: "#ff3b3c",
+      confirmButtonText: "Confirmar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        dispatch(calculateCantProductsCart({cantProducts:0}))
+        console.log("Local Storage ha sido limpiado.");
+      }
+    });
+  };
 
   return (
     <>
@@ -32,7 +47,6 @@ function CartResume(props: CartResumeProps) {
           </h2>
           <div className="flex justify-between items-center text-[20px]">
             <h3>Total</h3>
-            {/* <strong className="text-[20px]">${formattedPrice}</strong> */}
             <strong className="text-[20px]">${formattedTotal}</strong>
           </div>
           <small className="pb-[10px]">
@@ -43,6 +57,9 @@ function CartResume(props: CartResumeProps) {
           className="w-full  h-[35px] sm:h-[40px] bg-[#ff3b3c] text-white font-bold border-none rounded-[10px] hover:bg-[ff5151]"
           id="buy"
           type="button"
+          // -----------------------------
+          onClick={handleFinishPurchase}
+          // -----------------------------
         >
           COMPRAR
         </button>

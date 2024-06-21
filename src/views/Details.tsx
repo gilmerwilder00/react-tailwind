@@ -1,8 +1,6 @@
 import { useParams } from "react-router-dom";
-// import styles from "./Details.module.css";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
-// import products from "../assets/products";
 import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
 import Thumbs from "../components/Thumbs";

@@ -12,10 +12,8 @@ import type { RootState } from "../store/index";
 function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const text = useSelector((store: RootState) => store.products.text);
-  // ----------------------------
-  // console.log(products);
-  // ----------------------------
-  console.log(text)
+
+  console.log(products);
   
   useEffect(() => {
     axios

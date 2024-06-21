@@ -3,7 +3,7 @@ import Product from "../interfaces/Product";
 
 // -----------------------------------
 import { useDispatch } from "react-redux";
-import { calculateTotal } from "../store/actions/products";
+import { calculateTotal, calculateCantProductsCart } from "../store/actions/products";
 //------------------------------------
 
 interface productCardProps {
@@ -41,9 +41,12 @@ function CartCard(props: productCardProps) {
     if (one) {
       one.units = Number(unitsR.current?.value);
       localStorage.setItem("cart", JSON.stringify(products));
-      // ---------------------------------------
       dispatch(calculateTotal({ products }));
-      // ---------------------------------------
+      // ------------------------------------------------------------------
+      const cantProductsOnCart = products.reduce((acc: number, product: Product) => acc + product.units , 0)
+      // console.log(`la cantidad de productos antes de despachar desde carrito es: ${cantProductsOnCart}`);
+      dispatch(calculateCantProductsCart({cantProducts : cantProductsOnCart}));
+      // -----------------------------------------------------------------
     }
   };
 

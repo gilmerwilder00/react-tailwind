@@ -5,20 +5,12 @@ import CartCard from "../components/CartCard";
 import CartResume from "../components/CartResume";
 import { useState, useEffect } from "react";
 import Product from "../interfaces/Product";
-
-// ------------------------------------------------
 import { useDispatch } from "react-redux";
 import { calculateTotal } from "../store/actions/products";
-//----------------------------------------
+
 
 function Cart() {
   const [productsOnCart, setProductsOnCart] = useState<Product[]>([]);
-
-  const totalPrice = productsOnCart.reduce(
-    (acc, elem: Product) => acc + elem.price * (elem.units ?? 1),
-    0
-  );
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,9 +19,7 @@ function Cart() {
         localStorage.getItem("cart") ?? "[]"
       );
       setProductsOnCart(products);
-      // -------------------------------------------------------
       dispatch(calculateTotal({ products: products }));
-      // -------------------------------------------------------
     }
   }, []);
 
@@ -56,7 +46,7 @@ function Cart() {
           </section>
 
           <section className="w-full lg:w-1/3 flex justify-center items-center lg:justify-start lg:items-start ">
-            <CartResume price={totalPrice} />
+            <CartResume />
           </section>
         </section>
       </main>
